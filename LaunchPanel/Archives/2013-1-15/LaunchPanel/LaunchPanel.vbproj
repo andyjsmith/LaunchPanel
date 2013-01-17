@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0A842451-6ABC-4916-812F-EA31B532578F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>LaunchPanel.My.MyApplication</StartupObject>
+    <RootNamespace>LaunchPanel</RootNamespace>
+    <AssemblyName>LaunchPanel</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>LaunchPanel.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>LaunchPanel.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="exitProgram.Designer.vb">
+      <DependentUpon>exitProgram.vb</DependentUpon>
+    </Compile>
+    <Compile Include="exitProgram.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="functions.vb" />
+    <Compile Include="LaunchPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LaunchPanel.Designer.vb">
+      <DependentUpon>LaunchPanel.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="radio.Designer.vb">
+      <DependentUpon>radio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="radio.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="notes.Designer.vb">
+      <DependentUpon>notes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="notes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="settings.Designer.vb">
+      <DependentUpon>settings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="settings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="taskmanager.Designer.vb">
+      <DependentUpon>taskmanager.vb</DependentUpon>
+    </Compile>
+    <Compile Include="taskmanager.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="todo.Designer.vb">
+      <DependentUpon>todo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="todo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="webtab.Designer.vb">
+      <DependentUpon>webtab.vb</DependentUpon>
+    </Compile>
+    <Compile Include="webtab.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="exitProgram.resx">
+      <DependentUpon>exitProgram.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaunchPanel.resx">
+      <DependentUpon>LaunchPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="radio.resx">
+      <DependentUpon>radio.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="notes.resx">
+      <DependentUpon>notes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="settings.resx">
+      <DependentUpon>settings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="taskmanager.resx">
+      <DependentUpon>taskmanager.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="todo.resx">
+      <DependentUpon>todo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="webtab.resx">
+      <DependentUpon>webtab.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Untitled-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HomeDefault.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HomeHover.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HomeSelected.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Lite98Default.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Close-2-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moveCursor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ip_icon_02_Back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Radio1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Radio2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Radio3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Notes1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Notes2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Notes3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chrome.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ibcFAGQMhbDGe9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ps-x-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Web1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Web2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Web3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\forward.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\home.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reload.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\return.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tasks1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tasks2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tasks3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\todo1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\todo2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\todo3.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
