@@ -1,8 +1,8 @@
 ﻿Public Class todo
 
     Private Sub todo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.Height = 0
         autoAdjust()
+        Me.Location = New Point(Me.Location.X, -574)
     End Sub
     Sub autoAdjust()
         'Adjusting to fit monitor
@@ -21,21 +21,23 @@
         slideinTimer.Enabled = False
     End Sub
     Private Sub slideinTimer_Tick(sender As Object, e As EventArgs) Handles slideinTimer.Tick
-        Do
-            Me.Height += 2
-            'Me.Refresh()
-        Loop Until Me.Height = 578
-        slideinTimer.Enabled = False
+        If Me.Location.Y >= 0 Then
+            slideinTimer.Enabled = False
+            Me.Location = New Point(Me.Location.X, 0)
+        Else
+            Me.Location = New Point(Me.Location.X, Me.Location.Y + My.Settings.Slide)
+        End If
     End Sub
     Private Sub slideoutTimer_Tick(sender As Object, e As EventArgs) Handles slideoutTimer.Tick
-        Do
-            Me.Height -= 2
-            'Me.Refresh()
-        Loop Until Me.Height = 2
-        Me.Hide()
-        slideoutTimer.Enabled = False
-        LaunchPanel.Show()
-        LaunchPanel.slidein()
+        If Me.Location.Y <= -574 Then
+            slideoutTimer.Enabled = False
+            Me.Location = New Point(Me.Location.X, -574)
+            Me.Hide()
+            LaunchPanel.Show()
+            LaunchPanel.slidein()
+        Else
+            Me.Location = New Point(Me.Location.X, Me.Location.Y - My.Settings.Slide)
+        End If
     End Sub
 
     Private Sub returnBtn_Click(sender As Object, e As EventArgs) Handles returnBtn.Click

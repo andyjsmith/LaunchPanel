@@ -48,9 +48,11 @@ Partial Class webtab
         '
         'slideinTimer
         '
+        Me.slideinTimer.Interval = 10
         '
         'slideoutTimer
         '
+        Me.slideoutTimer.Interval = 10
         '
         'navstatusPanel
         '

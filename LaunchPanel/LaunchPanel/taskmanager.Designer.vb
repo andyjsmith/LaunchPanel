@@ -59,9 +59,11 @@ Partial Class taskmanager
         '
         'slideoutTimer
         '
+        Me.slideoutTimer.Interval = 10
         '
         'slideinTimer
         '
+        Me.slideinTimer.Interval = 10
         '
         'tasksList
         '

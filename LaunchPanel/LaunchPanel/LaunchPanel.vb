@@ -1,7 +1,17 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices, System.Speech, System.Resources
 
 Public Class LaunchPanel
+    Dim negativeformsize As Integer = 0 - Me.Height
+    Dim formsize As Integer = Me.Height
     Dim appdata As String = Environ("APPDATA")
+    Dim speedIn As Integer = My.Settings.slideIn
+    Dim speedOut As Integer = My.Settings.slideOut
+    Dim slide As Integer = My.Settings.Slide
+    Dim nowDate As Date
+    Dim nowTime As Date
+    Dim dow As Integer
+    Dim dowDecoded As String
+    Dim listenerEnabled As Boolean = True
     <DllImport("user32.dll")> _
     Private Shared Function GetAsyncKeyState(ByVal vKey As Integer) As UShort
     End Function
@@ -40,11 +50,26 @@ Public Class LaunchPanel
         'Adjust minimize button
         Dim closeBtnLoc As Point = New Point(screenWidth / 2 - closeButton.Width / 2, 370)
         closeButton.Location = closeBtnLoc
-        
+
 
     End Sub
 
+    Dim WithEvents reco As New Recognition.SpeechRecognitionEngine
+
+
     Private Sub LaunchPanel_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        'Setting up speech listening
+        reco.SetInputToDefaultAudioDevice()
+        Dim gram As New Recognition.SrgsGrammar.SrgsDocument
+        Dim synthRule As New Recognition.SrgsGrammar.SrgsRule("synth")
+        Dim synthList As New Recognition.SrgsGrammar.SrgsOneOf("open launchpanel", "close launchpanel", "kill launchpanel", "launch google chrome", "open google chrome", "new chrome window", "switch window", "lock workstation", "stop listening", "start listening", "close window")
+        synthRule.Add(synthList)
+        gram.Rules.Add(synthRule)
+        gram.Root = synthRule
+        reco.LoadGrammar(New Recognition.Grammar(gram))
+        reco.RecognizeAsync()
+
+
 
         Try
             'Setting up the environment - getting directories
@@ -64,57 +89,136 @@ Public Class LaunchPanel
         'The rest of it
         autoAdjust()
         keypressTimer.Enabled = True
-        Me.Height = 0
+        'Me.Height = 0
+        Me.Location = New Point(Me.Location.X, negativeformsize)
         slidein()
         isSlidOut = False
 
     End Sub
 
+    Private Sub reco_RecognizeCompleted(ByVal sender As Object, ByVal e As System.Speech.Recognition.RecognizeCompletedEventArgs) Handles reco.RecognizeCompleted
+        reco.RecognizeAsync()
+    End Sub
+    Private Declare Function LockWorkStation Lib "user32.dll" () As Long
+    Private Sub reco_SpeechRecognized(ByVal sender As Object, ByVal e As System.Speech.Recognition.RecognitionEventArgs) Handles reco.SpeechRecognized
+        Dim synth As New Synthesis.SpeechSynthesizer
+        If listenerEnabled = True Then
+
+            Select Case e.Result.Text
+                Case "open launchpanel"
+                    visibilities()
+                Case "close launchpanel"
+                    visibilities()
+                Case "kill launchpanel"
+                    Process.GetCurrentProcess.Kill()
+                Case "launch google chrome"
+                    Process.Start("C:\Users\Andy\AppData\Local\Google\Chrome\Application\chrome.exe")
+                Case "open google chrome"
+                    Process.Start("C:\Users\Andy\AppData\Local\Google\Chrome\Application\chrome.exe")
+                Case "new chrome window"
+                    Process.Start("C:\Users\Andy\AppData\Local\Google\Chrome\Application\chrome.exe")
+                Case "switch window"
+                    Process.Start("C:\Users\Andy\Desktop\Window Switcher.lnk")
+                    'SendKeys.Send("{DOWN}")
+                    'SendKeys.Send("{ENTER}")
+                Case "lock workstation"
+                    LockWorkStation()
+                    synth.SpeakAsync("locked workstation")
+                Case "stop listening"
+                    listenerEnabled = False
+                    Beep()
+                Case "close window"
+                    SendKeys.Send("%(F4)")
+            End Select
+        Else
+            Select Case e.Result.Text
+                Case "start listening"
+                    listenerEnabled = True
+                    Beep()
+            End Select
+        End If
+    End Sub
+
+
+
+    Private Sub SpeechSynth(ByVal color As System.Drawing.Color)
+
+        Dim synth As New Synthesis.SpeechSynthesizer
+
+        synth.SpeakAsync("setting the back color to " + color.ToString)
+
+        Me.BackColor = color
+
+    End Sub
+
     Private Sub slideinTimer_Tick(sender As System.Object, e As System.EventArgs) Handles slideinTimer.Tick
         'Making buttons not lag :P
-        YouWidgetBtn.Visible = False
-        blcBtn.Visible = False
-        namesuggesterBtn.Visible = False
-        toolproBtn.Visible = False
-        'End button lag
-        Me.Refresh()
-        Do
-            Me.Height += 2
-            ' Me.Refresh()
-        Loop Until Me.Height = 400
+        'extlookupBtn.Visible = False
+        'YouWidgetBtn.Visible = False
+        'blcBtn.Visible = False
+        'namesuggesterBtn.Visible = False
+        'toolproBtn.Visible = False
+        'numbergeneratorBtn.Visible = False
+        ''End button lag
+        'Me.Refresh()
+        'Do
+        '    Me.Height += My.Settings.Slide '5 2
+        '    ' Me.Refresh()
+        'Loop Until Me.Height = My.Settings.slideIn '402 400
 
-        slideinTimer.Enabled = False
+        'slideinTimer.Enabled = False
 
-        'Make buttons visible again
-        YouWidgetBtn.Visible = True
-        blcBtn.Visible = True
-        namesuggesterBtn.Visible = True
-        toolproBtn.Visible = True
+        ''Make buttons visible again
+        'numbergeneratorBtn.Visible = True
+        'extlookupBtn.Visible = True
+        'YouWidgetBtn.Visible = True
+        'blcBtn.Visible = True
+        'namesuggesterBtn.Visible = True
+        'toolproBtn.Visible = True
+        If Me.Location.Y >= 0 Then
+            slideinTimer.Enabled = False
+            Me.Location = New Point(Me.Location.X, 0)
+        Else
+            Me.Location = New Point(Me.Location.X, Me.Location.Y + My.Settings.Slide)
+        End If
     End Sub
 
     Private Sub slideoutTimer_Tick(sender As System.Object, e As System.EventArgs) Handles slideoutTimer.Tick
 
         'Making buttons not lag :P
-        YouWidgetBtn.Visible = False
-        blcBtn.Visible = False
-        namesuggesterBtn.Visible = False
-        toolproBtn.Visible = False
-        'End button lag
+        'extlookupBtn.Visible = False
+        'YouWidgetBtn.Visible = False
+        'blcBtn.Visible = False
+        'namesuggesterBtn.Visible = False
+        'toolproBtn.Visible = False
+        'numbergeneratorBtn.Visible = False
+        ''End button lag
 
-        Me.Refresh()
-        Do
-            Me.Height -= 2
-            ' Me.Refresh()
-        Loop Until Me.Height = 4
-        Me.Hide()
-        slideoutTimer.Enabled = False
-        Me.Refresh()
+        'Me.Refresh()
+        'Do
+        '    Me.Height -= My.Settings.Slide '5 2
+        '    ' Me.Refresh()
+        'Loop Until Me.Height = My.Settings.slideOut '2 4
+        'Me.Hide()
+        'slideoutTimer.Enabled = False
+        'Me.Refresh()
 
-        'Make buttons visible again
-        YouWidgetBtn.Visible = True
-        blcBtn.Visible = True
-        namesuggesterBtn.Visible = True
-        toolproBtn.Visible = True
+        ''Make buttons visible again
+        'numbergeneratorBtn.Visible = True
+        'extlookupBtn.Visible = True
+        'YouWidgetBtn.Visible = True
+        'blcBtn.Visible = True
+        'namesuggesterBtn.Visible = True
+        'toolproBtn.Visible = True
+
+        If Me.Location.Y <= -400 Then
+            slideoutTimer.Enabled = False
+            Me.Location = New Point(Me.Location.X, -400)
+            Me.Hide()
+        Else
+            Me.Location = New Point(Me.Location.X, Me.Location.Y - My.Settings.Slide)
+        End If
+
     End Sub
 
     Private Sub settingsIcon_MouseHover(sender As Object, e As System.EventArgs) Handles settingsIcon.MouseHover
@@ -147,24 +251,35 @@ Public Class LaunchPanel
 
         If Hotkey = True Then
 
-            If Me.Visible = True Then
-                Me.slideout()
-            End If
+            visibilities()
 
-            If Me.Visible = False Then
-                If notes.Visible = True Then
-                    notes.notesSlideout()
-                ElseIf radio.Visible = True Then
-                    radio.lite98Slideout()
-                ElseIf webtab.Visible = True Then
-                    webtab.webtabSlideout()
-                ElseIf taskmanager.Visible = True Then
-                    taskmanager.taskmanagerSlideout()
-                ElseIf todo.Visible = True Then
-                    todo.todoSlideout()
-                ElseIf radio.Visible = False And notes.Visible = False And Me.Visible = False Then
-                    Me.slidein()
-                End If
+        End If
+        nowDate = DateValue(Now)
+        nowTime = TimeValue(Now)
+        timeLbl.Text = nowTime
+        dateLbl.Text = nowDate
+        dow = Weekday(Now)
+        dowDecoded = WeekdayName(dow)
+        dowLbl.Text = dowDecoded
+    End Sub
+    Sub visibilities()
+        If Me.Visible = True Then
+            Me.slideout()
+        End If
+
+        If Me.Visible = False Then
+            If notes.Visible = True Then
+                notes.notesSlideout()
+            ElseIf radio.Visible = True Then
+                radio.lite98Slideout()
+            ElseIf webtab.Visible = True Then
+                webtab.webtabSlideout()
+            ElseIf taskmanager.Visible = True Then
+                taskmanager.taskmanagerSlideout()
+            ElseIf todo.Visible = True Then
+                todo.todoSlideout()
+            ElseIf radio.Visible = False And notes.Visible = False And Me.Visible = False Then
+                Me.slidein()
             End If
         End If
     End Sub
@@ -344,5 +459,28 @@ Public Class LaunchPanel
             MsgBox(ex.Message, MsgBoxStyle.Information, "Execution Failed")
         End Try
         slideout()
+    End Sub
+
+    Private Sub extlookupBtn_Click(sender As Object, e As EventArgs) Handles extlookupBtn.Click
+        Try
+            Process.Start(My.Settings.homeDirectory & "Extension Lookup.exe")
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Information, "Execution Failed")
+        End Try
+        slideout()
+    End Sub
+
+    Private Sub numbergeneratorBtn_Click(sender As Object, e As EventArgs) Handles numbergeneratorBtn.Click
+        Try
+            Process.Start(My.Settings.homeDirectory & "Random Number Generator.exe")
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Information, "Execution Failed")
+        End Try
+        slideout()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        slideout()
+        visualControl.Show()
     End Sub
 End Class

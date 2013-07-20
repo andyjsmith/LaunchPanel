@@ -44,5 +44,31 @@
         Else
             helpBox.Text = "Error: No help file found!"
         End If
+        saveTB.Text = My.Settings.homeDirectory
+    End Sub
+
+    Private Sub slowBtn_Click(sender As Object, e As EventArgs) Handles slowBtn.Click
+        My.Settings.Slide = 20
+        My.Settings.slideIn = 400
+        My.Settings.slideOut = 4
+        Application.Exit()
+    End Sub
+
+    Private Sub fastBtn_Click(sender As Object, e As EventArgs) Handles fastBtn.Click
+        My.Settings.Slide = 40
+        My.Settings.slideIn = 402
+        My.Settings.slideOut = 2
+        Application.Exit()
+    End Sub
+
+    Private Sub noneBtn_Click(sender As Object, e As EventArgs) Handles noneBtn.Click
+        My.Settings.Slide = 400
+        My.Settings.slideIn = 402
+        My.Settings.slideOut = 2
+        Application.Exit()
+    End Sub
+
+    Private Sub opendirBtn_Click(sender As Object, e As EventArgs) Handles opendirBtn.Click
+        Process.Start(My.Settings.homeDirectory)
     End Sub
 End Class

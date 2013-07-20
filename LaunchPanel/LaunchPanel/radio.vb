@@ -10,23 +10,24 @@
     End Sub
 
     Private Sub slideinTimer_Tick(sender As System.Object, e As System.EventArgs) Handles slideinTimer.Tick
-        Do
-            Me.Height += 2
-            Me.Refresh()
-        Loop Until Me.Height = 292
-        slideinTimer.Enabled = False
+        If Me.Location.Y >= 0 Then
+            slideinTimer.Enabled = False
+            Me.Location = New Point(Me.Location.X, 0)
+        Else
+            Me.Location = New Point(Me.Location.X, Me.Location.Y + My.Settings.Slide)
+        End If
     End Sub
 
     Private Sub slideoutTimer_Tick(sender As System.Object, e As System.EventArgs) Handles slideoutTimer.Tick
-        Do
-            Me.Height -= 2
-            'Me.Refresh()
-        Loop Until Me.Height = 4
-        Me.Hide()
-        slideoutTimer.Enabled = False
-        LaunchPanel.Show()
-        LaunchPanel.slidein()
-        Me.Hide()
+        If Me.Location.Y <= -290 Then
+            slideoutTimer.Enabled = False
+            Me.Location = New Point(Me.Location.X, -290)
+            Me.Hide()
+            LaunchPanel.Show()
+            LaunchPanel.slidein()
+        Else
+            Me.Location = New Point(Me.Location.X, Me.Location.Y - My.Settings.Slide)
+        End If
     End Sub
 
     Private Sub back_Click(sender As System.Object, e As System.EventArgs) Handles back.Click
@@ -34,8 +35,8 @@
     End Sub
 
     Private Sub lite98_Load(sender As Object, e As System.EventArgs) Handles Me.Load
-        Me.Height = 0
         autoAdjust()
+        Me.Location = New Point(Me.Location.X, -290)
     End Sub
 
     Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click

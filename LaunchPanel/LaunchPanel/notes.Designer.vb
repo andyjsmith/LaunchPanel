@@ -31,6 +31,7 @@ Partial Class notes
         '
         'slideinTimer
         '
+        Me.slideinTimer.Interval = 10
         '
         'Button1
         '
@@ -44,6 +45,7 @@ Partial Class notes
         '
         'slideoutTimer
         '
+        Me.slideoutTimer.Interval = 10
         '
         'notesTextBox
         '

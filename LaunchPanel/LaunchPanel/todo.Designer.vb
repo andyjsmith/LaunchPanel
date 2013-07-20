@@ -41,9 +41,11 @@ Partial Class todo
         '
         'slideoutTimer
         '
+        Me.slideoutTimer.Interval = 10
         '
         'slideinTimer
         '
+        Me.slideinTimer.Interval = 10
         '
         'todo
         '

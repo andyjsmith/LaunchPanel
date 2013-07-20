@@ -16,16 +16,19 @@
     End Sub
 
     Private Sub slideinTimer_Tick(sender As System.Object, e As System.EventArgs) Handles slideinTimer.Tick
-        Do
-            Me.Height += 1
-            'Me.Refresh()
-        Loop Until Me.Height = 700
-        slideinTimer.Enabled = False
+        If Me.Location.Y >= 0 Then
+            slideinTimer.Enabled = False
+            Me.Location = New Point(Me.Location.X, 0)
+        Else
+            Me.Location = New Point(Me.Location.X, Me.Location.Y + My.Settings.Slide)
+        End If
     End Sub
 
     Private Sub notes_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        Me.Height = 0
         autoAdjust()
+        Me.Location = New Point(Me.Location.X, -700)
+        notesTextBox.BackColor = My.Settings.notesbg
+        notesTextBox.ForeColor = My.Settings.notestext
     End Sub
 
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
@@ -33,14 +36,15 @@
     End Sub
 
     Private Sub slideoutTimer_Tick(sender As System.Object, e As System.EventArgs) Handles slideoutTimer.Tick
-        Do
-            Me.Height -= 1
-            'Me.Refresh()
-        Loop Until Me.Height = 5
-        Me.Hide()
-        slideoutTimer.Enabled = False
-        LaunchPanel.Show()
-        LaunchPanel.slidein()
+        If Me.Location.Y <= -700 Then
+            slideoutTimer.Enabled = False
+            Me.Location = New Point(Me.Location.X, -700)
+            Me.Hide()
+            LaunchPanel.Show()
+            LaunchPanel.slidein()
+        Else
+            Me.Location = New Point(Me.Location.X, Me.Location.Y - My.Settings.Slide)
+        End If
     End Sub
     Sub autoAdjust()
         'Adjusting to fit monitor

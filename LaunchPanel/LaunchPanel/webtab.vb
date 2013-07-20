@@ -5,7 +5,7 @@
     Private Sub webtab_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim formloc As Point = New Point(screenWidth / 2 - Me.Width / 2, 0)
         Me.Location = formloc
-        Me.Height = 0
+        Me.Location = New Point(Me.Location.X, -290)
 
         '''''''''''''
 
@@ -21,22 +21,24 @@
     End Sub
 
     Private Sub slideinTimer_Tick(sender As Object, e As EventArgs) Handles slideinTimer.Tick
-        Do
-            Me.Height += 2
-            'Me.Refresh()
-        Loop Until Me.Height = 546
-        slideinTimer.Enabled = False
+        If Me.Location.Y >= 0 Then
+            slideinTimer.Enabled = False
+            Me.Location = New Point(Me.Location.X, 0)
+        Else
+            Me.Location = New Point(Me.Location.X, Me.Location.Y + My.Settings.Slide)
+        End If
     End Sub
 
     Private Sub slideoutTimer_Tick(sender As Object, e As EventArgs) Handles slideoutTimer.Tick
-        Do
-            Me.Height -= 2
-            'Me.Refresh()
-        Loop Until Me.Height = 4
-        Me.Hide()
-        slideoutTimer.Enabled = False
-        LaunchPanel.Show()
-        LaunchPanel.slidein()
+        If Me.Location.Y <= -546 Then
+            slideoutTimer.Enabled = False
+            Me.Location = New Point(Me.Location.X, -546)
+            Me.Hide()
+            LaunchPanel.Show()
+            LaunchPanel.slidein()
+        Else
+            Me.Location = New Point(Me.Location.X, Me.Location.Y - My.Settings.Slide)
+        End If
     End Sub
 
     Private Sub webAddress_KeyPress(sender As Object, e As KeyPressEventArgs) Handles webAddress.KeyPress

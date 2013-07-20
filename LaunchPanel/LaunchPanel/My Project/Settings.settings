@@ -20,5 +20,17 @@
     <Setting Name="alreadyValidated" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="Slide" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="slideIn" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">402</Value>
+    </Setting>
+    <Setting Name="slideOut" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="currentUser" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
